@@ -22,11 +22,16 @@ function slugify(input: string): string {
   );
 }
 
+export function pngFileName(state: CardState): string {
+  return `bookskim-quote-${slugify(state.book || state.quote)}.png`;
+}
+
 /**
- * Render the card to a fresh 1080×1080 canvas and trigger a PNG download.
- * Waits for fonts (and the background image, if any) so the output is crisp.
+ * Render the card to a fresh 1080×1080 canvas and return the PNG blob. Waits
+ * for fonts (and the background image, if any) so the output is crisp. Shared
+ * by both the download and the share flows.
  */
-export async function exportPng(state: CardState): Promise<void> {
+export async function renderCardToBlob(state: CardState): Promise<Blob> {
   await ensureFontLoaded(getFont(state.fontKey));
 
   let image: HTMLImageElement | null = null;
@@ -49,15 +54,24 @@ export async function exportPng(state: CardState): Promise<void> {
   const blob: Blob | null = await new Promise((resolve) =>
     canvas.toBlob((b) => resolve(b), "image/png")
   );
-  if (!blob) throw new Error("PNG export failed");
+  if (!blob) throw new Error("PNG render failed");
+  return blob;
+}
 
+/** Trigger a browser download of a blob. */
+export function downloadBlob(blob: Blob, filename: string): void {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `bookskim-quote-${slugify(state.book || state.quote)}.png`;
+  a.download = filename;
   document.body.appendChild(a);
   a.click();
   a.remove();
-  // revoke on next tick so the download starts reliably
   setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+/** Render and download the card as an exactly 1080×1080 PNG. */
+export async function exportPng(state: CardState): Promise<void> {
+  const blob = await renderCardToBlob(state);
+  downloadBlob(blob, pngFileName(state));
 }

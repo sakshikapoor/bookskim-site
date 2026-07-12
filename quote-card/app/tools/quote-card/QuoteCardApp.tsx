@@ -7,6 +7,7 @@ import { CardState, DEFAULT_STATE } from "@/lib/types";
 import { autoStyle, randomInitialGradientId } from "@/lib/autoStyle";
 import { loadState, saveState } from "@/lib/storage";
 import { QuoteCanvas } from "@/components/QuoteCanvas";
+import { ShareButton } from "@/components/ShareButton";
 import { Toolbar, SectionId, SECTIONS } from "@/components/Toolbar";
 import { BottomToolbar } from "@/components/BottomToolbar";
 import { BottomSheet } from "@/components/BottomSheet";
@@ -78,19 +79,26 @@ export default function QuoteCardApp() {
       <main className="mx-auto flex w-full max-w-[1240px] flex-1 flex-col gap-6 px-4 pb-24 pt-4 lg:flex-row lg:px-6 lg:pb-8 lg:pt-4">
         {/* Preview */}
         <div className="order-1 flex flex-1 items-center justify-center lg:order-2">
-          <motion.div
-            key={pulse}
-            initial={pulse === 0 ? false : { scale: 0.985, opacity: 0.85 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ type: "spring", damping: 26, stiffness: 320 }}
-            className="w-full max-w-[min(88vw,560px)] lg:max-w-[600px]"
-          >
-            <QuoteCanvas
-              state={state}
-              onClick={() => setSheet("value")}
-              className="lg:cursor-default"
-            />
-          </motion.div>
+          <div className="flex w-full max-w-[min(88vw,560px)] flex-col items-center lg:max-w-[600px]">
+            <motion.div
+              key={pulse}
+              initial={pulse === 0 ? false : { scale: 0.985, opacity: 0.85 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: "spring", damping: 26, stiffness: 320 }}
+              className="w-full"
+            >
+              <QuoteCanvas
+                state={state}
+                onClick={() => setSheet("value")}
+                className="lg:cursor-default"
+              />
+            </motion.div>
+
+            {/* Mobile: share button hovering centrally below the card */}
+            <div className="mt-5 lg:hidden">
+              <ShareButton state={state} />
+            </div>
+          </div>
         </div>
 
         {/* Desktop control panel */}
@@ -104,8 +112,8 @@ export default function QuoteCardApp() {
         </aside>
       </main>
 
-      {/* Mobile floating actions: Export (top-left) + Auto Style (top-right) */}
-      <MobileFloatingActions state={state} onAuto={onAuto} />
+      {/* Mobile floating action: Auto Style (top-right) */}
+      <MobileFloatingActions onAuto={onAuto} />
 
       {/* Mobile bottom navigation */}
       <div className="lg:hidden">
