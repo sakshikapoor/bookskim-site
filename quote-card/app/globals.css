@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+/* ---- BookSkim design tokens (mirrored from the marketing site) ---- */
+:root {
+  color-scheme: dark;
+  --ink: #131117;
+  --ink-2: #0d0c11;
+  --surface: #1e1b26;
+  --surface-2: #26222f;
+  --line: rgba(255, 255, 255, 0.09);
+  --line-2: rgba(255, 255, 255, 0.14);
+  --text: #ece9f1;
+  --muted: #a9a4b8;
+  --faint: #7c7690;
+  --blue: #4c86ff;
+  --blue-brand: #2e6bf6;
+  --blue-lt: #8fb4ff;
+  --pink: #ff5fa2;
+  --yellow: #ffc24b;
+  --orange: #ff7a3d;
+  --r: 20px;
+
+  --font-display: var(--font-manrope), system-ui, sans-serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+}
+
+/* expose tokens to Tailwind v4's theme so text-muted, bg-surface, etc. work */
+@theme inline {
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-brand: var(--blue-brand);
+  --color-brand-lt: var(--blue-lt);
+  --color-pink: var(--pink);
+  --color-yellow: var(--yellow);
+  --color-orange: var(--orange);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  background-image: radial-gradient(
+      55vw 42vw at 85% -8%,
+      rgba(76, 134, 255, 0.16),
+      transparent 60%
+    ),
+    radial-gradient(48vw 36vw at 4% 6%, rgba(255, 95, 162, 0.1), transparent 60%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+:focus-visible {
+  outline: 2px solid var(--blue-lt);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* thin, quiet scrollbars for the control panel */
+.panel-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-2) transparent;
+}
+.panel-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.panel-scroll::-webkit-scrollbar-thumb {
+  background: var(--line-2);
+  border-radius: 999px;
+}
+
+/* range inputs styled to match the dark UI */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--line-2);
+  outline: none;
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--text);
+  border: 3px solid var(--blue-brand);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--text);
+  border: 3px solid var(--blue-brand);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
