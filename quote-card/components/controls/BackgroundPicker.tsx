@@ -48,7 +48,7 @@ export function BackgroundPicker({
   });
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3.5 lg:space-y-4">
       <Segmented<"gradient" | "image">
         options={[
           { value: "gradient", label: "Gradients" },
@@ -63,7 +63,7 @@ export function BackgroundPicker({
       />
 
       {tab === "gradient" ? (
-        <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-4">
+        <div className="grid grid-cols-4 gap-2 sm:grid-cols-4">
           {GRADIENTS.map((g) => {
             const active =
               state.bgType === "gradient" && state.gradientId === g.id;

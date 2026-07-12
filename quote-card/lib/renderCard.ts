@@ -115,9 +115,7 @@ export function renderCard(
 
   // ---- Text layout ----
   const maxWidth = size * state.quoteWidthPct;
-  const quoteText = state.showQuoteMarks
-    ? `“${state.quote.trim()}”`
-    : state.quote.trim();
+  const quoteText = state.quote.trim();
 
   const quoteFontPx = state.fontSize * (size / CARD_SIZE);
   const letterSpacingPx = state.letterSpacing * (size / CARD_SIZE);
@@ -162,6 +160,21 @@ export function renderCard(
     ctx.shadowColor = "rgba(0,0,0,0.5)";
     ctx.shadowBlur = size * 0.02;
     ctx.shadowOffsetY = size * 0.004;
+  }
+
+  // ---- Big decorative opening quote mark (top-left) ----
+  if (state.quote.trim()) {
+    const markPx = Math.max(quoteFontPx * 2.4, size * 0.17);
+    ctx.save();
+    ctx.shadowColor = "transparent";
+    ctx.textAlign = "left";
+    ctx.textBaseline = "top";
+    ctx.letterSpacing = "0px";
+    ctx.font = `700 ${markPx}px ${font.family}`;
+    ctx.fillStyle = state.textColor;
+    ctx.globalAlpha = 0.28;
+    ctx.fillText("“", size * 0.085, size * 0.05);
+    ctx.restore();
   }
 
   // ---- Draw quote ----

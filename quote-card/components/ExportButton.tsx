@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Download } from "lucide-react";
 import { CardState } from "@/lib/types";
 import { exportPng } from "@/lib/exportPng";
 
@@ -40,7 +41,7 @@ export function ExportButton({
       {busy ? (
         <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
       ) : (
-        <span>⬇</span>
+        <Download size={17} strokeWidth={2.2} />
       )}
       {busy ? "Rendering…" : "Download PNG"}
       <span className="text-[11px] font-medium opacity-70">1080×1080</span>

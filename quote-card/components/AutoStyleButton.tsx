@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Sparkles } from "lucide-react";
 
 export function AutoStyleButton({ onClick }: { onClick: () => void }) {
   return (
@@ -26,7 +27,7 @@ export function AutoStyleButton({ onClick }: { onClick: () => void }) {
         animate={{ x: "120%" }}
         transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
       />
-      <span className="relative">✨</span>
+      <Sparkles className="relative" size={18} strokeWidth={2.2} />
       <span className="relative">Auto Style</span>
     </motion.button>
   );

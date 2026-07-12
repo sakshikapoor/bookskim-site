@@ -28,6 +28,24 @@ export function Field({
   );
 }
 
+/** A labeled block for non-<input> controls (dropdowns, custom pickers). */
+export function Labeled({
+  label,
+  children,
+}: {
+  label: string;
+  children: ReactNode;
+}) {
+  return (
+    <div>
+      <div className="mb-2 text-[12px] font-medium uppercase tracking-[0.12em] text-faint">
+        {label}
+      </div>
+      {children}
+    </div>
+  );
+}
+
 export function Slider({
   label,
   value,

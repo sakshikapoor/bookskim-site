@@ -2,24 +2,29 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { CardState, DEFAULT_STATE } from "@/lib/types";
 import { autoStyle, randomInitialGradientId } from "@/lib/autoStyle";
 import { loadState, saveState } from "@/lib/storage";
 import { QuoteCanvas } from "@/components/QuoteCanvas";
-import { Toolbar } from "@/components/Toolbar";
+import { Toolbar, SectionId, SECTIONS } from "@/components/Toolbar";
 import { BottomToolbar } from "@/components/BottomToolbar";
 import { BottomSheet } from "@/components/BottomSheet";
+import { MobileFloatingActions } from "@/components/MobileFloatingActions";
+import { ValueControls } from "@/components/controls/ValueControls";
 import { TextControls } from "@/components/controls/TextControls";
-import { FontPicker } from "@/components/controls/FontPicker";
 import { BackgroundPicker } from "@/components/controls/BackgroundPicker";
 
-type Sheet = "text" | "background" | null;
+const TITLES: Record<SectionId, string> = {
+  value: "Value",
+  text: "Text",
+  background: "Background",
+};
 
 export default function QuoteCardApp() {
   const searchParams = useSearchParams();
   const [state, setState] = useState<CardState>(DEFAULT_STATE);
-  const [sheet, setSheet] = useState<Sheet>(null);
+  const [sheet, setSheet] = useState<SectionId | null>(null);
   const [pulse, setPulse] = useState(0);
   const initialized = useRef(false);
 
@@ -59,12 +64,18 @@ export default function QuoteCardApp() {
     setPulse((p) => p + 1);
   }, []);
 
+  const renderSheet = (id: SectionId) => {
+    if (id === "value") return <ValueControls state={state} update={update} />;
+    if (id === "text") return <TextControls state={state} update={update} />;
+    return <BackgroundPicker state={state} update={update} />;
+  };
+
   return (
     <div className="flex min-h-[100dvh] flex-col">
       <Header />
 
-      {/* ===== Desktop: two columns · Mobile: preview + bottom toolbar ===== */}
-      <main className="mx-auto flex w-full max-w-[1240px] flex-1 flex-col gap-6 px-4 pb-4 pt-4 lg:flex-row lg:px-6 lg:pb-8">
+      {/* ===== Desktop: two columns · Mobile: preview + bottom nav ===== */}
+      <main className="mx-auto flex w-full max-w-[1240px] flex-1 flex-col gap-6 px-4 pb-24 pt-4 lg:flex-row lg:px-6 lg:pb-8 lg:pt-4">
         {/* Preview */}
         <div className="order-1 flex flex-1 items-center justify-center lg:order-2">
           <motion.div
@@ -76,7 +87,7 @@ export default function QuoteCardApp() {
           >
             <QuoteCanvas
               state={state}
-              onClick={() => setSheet("text")}
+              onClick={() => setSheet("value")}
               className="lg:cursor-default"
             />
           </motion.div>
@@ -93,40 +104,28 @@ export default function QuoteCardApp() {
         </aside>
       </main>
 
-      {/* Mobile bottom toolbar */}
+      {/* Mobile floating actions: Export (top-left) + Auto Style (top-right) */}
+      <MobileFloatingActions state={state} onAuto={onAuto} />
+
+      {/* Mobile bottom navigation */}
       <div className="lg:hidden">
         <BottomToolbar
-          state={state}
-          onText={() => setSheet("text")}
-          onBackground={() => setSheet("background")}
-          onAuto={onAuto}
+          active={sheet}
+          onSelect={(id) => setSheet((cur) => (cur === id ? null : id))}
         />
       </div>
 
       {/* Mobile sheets */}
-      <BottomSheet
-        open={sheet === "text"}
-        title="Text"
-        onClose={() => setSheet(null)}
-      >
-        <div className="space-y-6">
-          <TextControls state={state} update={update} />
-          <div>
-            <h3 className="mb-3 text-[13px] font-semibold uppercase tracking-[0.14em] text-muted">
-              Font
-            </h3>
-            <FontPicker state={state} update={update} />
-          </div>
-        </div>
-      </BottomSheet>
-
-      <BottomSheet
-        open={sheet === "background"}
-        title="Background"
-        onClose={() => setSheet(null)}
-      >
-        <BackgroundPicker state={state} update={update} />
-      </BottomSheet>
+      {SECTIONS.map((s) => (
+        <BottomSheet
+          key={s.id}
+          open={sheet === s.id}
+          title={TITLES[s.id]}
+          onClose={() => setSheet(null)}
+        >
+          {renderSheet(s.id)}
+        </BottomSheet>
+      ))}
     </div>
   );
 }

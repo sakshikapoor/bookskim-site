@@ -118,7 +118,6 @@ export function autoStyle(prev: CardState): Partial<CardState> {
     align,
     textColor,
     letterSpacing: 0,
-    showQuoteMarks: Math.random() > 0.25,
   };
 }
 

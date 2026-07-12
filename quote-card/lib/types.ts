@@ -31,8 +31,6 @@ export interface CardState {
   lineHeight: number;
   /** letter spacing in px (-2–8) */
   letterSpacing: number;
-  /** wrap the quote in decorative “ ” marks */
-  showQuoteMarks: boolean;
 
   bgType: BackgroundType;
   /** id into the gradient list (see lib/gradients.ts) */
@@ -59,7 +57,6 @@ export const DEFAULT_STATE: CardState = {
   quoteWidthPct: 0.72,
   lineHeight: 1.28,
   letterSpacing: 0,
-  showQuoteMarks: true,
   bgType: "gradient",
   gradientId: "midnight",
   image: DEFAULT_IMAGE,
