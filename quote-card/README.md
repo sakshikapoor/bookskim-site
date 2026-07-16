@@ -26,7 +26,7 @@ Launch prefilled (this is how the BookSkim Android app opens it):
 2. **Set "Root Directory" to `quote-card`.** Framework auto-detects as Next.js.
 3. Deploy. The tool is served at `https://<your-domain>/tools/quote-card`.
 4. Update the two `Quote Cards` links in the repo-root `index.html` to your final Vercel
-   URL (search for `bookskim-quote-card.vercel.app`).
+   URL (search for `bookskim-site.vercel.app`).
 
 Pure client-side app — no env vars, no server functions.
 
