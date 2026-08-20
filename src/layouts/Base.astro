@@ -9,6 +9,7 @@ interface Props {
 
 const { title, description } = Astro.props;
 const play = 'https://play.google.com/store/apps/details?id=com.wildkidstudio.bookskim';
+const hire = 'https://sakshikapoor.com/';
 const themes = [
   { id: 'light', label: 'Light' },
   { id: 'sepia', label: 'Sepia' },
@@ -73,6 +74,10 @@ const themes = [
           <a class="btn btn--sm nav__cta" href={play}>Get it</a>
         </div>
       </div>
+
+      <p class="hire-note">
+        <a href={hire} target="_blank" rel="noopener">looking for a designer? hire me!</a>
+      </p>
     </header>
 
     <main id="main">
@@ -81,7 +86,7 @@ const themes = [
 
     <footer class="foot">
       <div class="wrap foot__hire">
-        <a class="hire" href="https://sakshikapoor.com/" target="_blank" rel="noopener">
+        <a class="hire" href={hire} target="_blank" rel="noopener">
           <span>Looking for a design?</span>
           <strong>Hire me!</strong>
         </a>
@@ -218,6 +223,20 @@ const themes = [
         gap: .75rem;
         flex: none;
       }
+
+      /* A handwritten aside hanging off the right end of the nav pill.
+         Same trick as the margin notes further down the page. */
+      .hire-note {
+        position: absolute;
+        top: 100%;
+        right: max(1rem, calc(50% - 560px + 1.5rem));
+        margin: .35rem 0 0;
+        font-family: 'Caveat', cursive;
+        font-size: 1.2rem;
+        transform: rotate(-2deg);
+      }
+      .hire-note a { color: var(--accent); text-decoration: none; }
+      .hire-note a:hover { text-decoration: underline; }
 
       /* --- theme switcher: the app's four reading themes --- */
       .themes {

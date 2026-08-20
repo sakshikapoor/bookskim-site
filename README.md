@@ -17,9 +17,10 @@ bun run dev      # http://localhost:4321
 Other scripts:
 
 ```sh
-bun run build    # static site into dist/
-bun run preview  # serve dist/ locally
-bun run check    # Astro type check
+bun run build        # static site into dist/
+bun run build:pages  # same, built for the GitHub Pages project path
+bun run preview      # serve dist/ locally
+bun run check        # Astro type check
 ```
 
 ## Layout
@@ -48,25 +49,46 @@ it is behind `import.meta.env.DEV`.
 
 ## Deploy to GitHub Pages
 
-`.github/workflows/deploy.yml` builds and deploys on every push to `main`.
+The live site is <https://sakshikapoor.github.io/bookskim-site/>. It is served
+straight from the root of `main` in the **bookskim-site** repo, not by an
+Actions workflow, so the built files are committed alongside the source.
 
-One-time setup: in the repo, go to **Settings → Pages → Build and deployment**
-and set **Source** to **GitHub Actions**. Push to `main` and it deploys.
+This repo keeps the two apart:
 
-The workflow passes `SITE` and `BASE_PATH` into the build from
-`actions/configure-pages`, so the same code works at a project path
-(`user.github.io/bookskim-web/`) or at a domain root. All internal links and
-asset paths go through `url()` in `src/lib/url.ts` — use it for any new one,
-or the site breaks under a project path.
+- `main` — source only. `dist/` is gitignored.
+- `deploy` — the same source plus the built site copied to the repo root.
+  This is the branch that gets pushed.
+
+The build has to know the project path or every asset link breaks, so use
+`build:pages` rather than plain `build` — it sets `SITE` and `BASE_PATH` for
+you.
+
+```sh
+git checkout deploy
+git merge main
+bun run build:pages
+rm -rf _astro assets index.html privacy
+cp -R dist/_astro dist/assets dist/index.html dist/privacy .
+git add -A && git commit -m "Rebuild the site"
+git push site deploy:main
+git checkout main
+```
+
+Check the diff before pushing: if `index.html` suddenly links to `/assets/…`
+instead of `/bookskim-site/assets/…`, the build ran without `BASE_PATH` and
+the live site will 404 on everything.
+
+All internal links and asset paths go through `url()` in `src/lib/url.ts` —
+use it for any new one, or the site breaks under the project path.
 
 ### Custom domain
 
 Add the domain under **Settings → Pages → Custom domain**, then commit a
-`public/CNAME` file containing just the domain. `BASE_PATH` becomes `/`
-automatically.
+`public/CNAME` file containing just the domain. `BASE_PATH` becomes `/`, so
+plain `bun run build` is the right command from then on.
 
 ### Building for a project path locally
 
 ```sh
-BASE_PATH=/bookskim-web bun run build && bun run preview
+bun run build:pages && bun run preview
 ```

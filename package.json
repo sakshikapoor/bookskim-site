@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:pages": "SITE=https://sakshikapoor.github.io BASE_PATH=/bookskim-site astro build",
     "preview": "astro preview",
     "check": "astro check"
   },
