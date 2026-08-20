@@ -15,15 +15,15 @@ const demo =
 const faqs = [
   {
     q: 'What does Fast Skim actually do?',
-    a: 'It bolds the first few letters of every word. Your eye lands on the bold part, your brain fills in the rest, and you stop backtracking over the same line. Nothing but the type changes. Toggle it per book, whenever you want.',
+    a: 'It bolds the first few letters of every word, so your eye has a fixed point to land on instead of drifting back over the line. Nothing but the type changes. Turn it on or off per book, whenever you want.',
   },
   {
     q: 'Which files can I read?',
-    a: 'EPUB files you already have. Import one from your device and it lands in your library. No store, no DRM server, no lock-in.',
+    a: 'EPUB files you already have. Import one from your device and it lands in your library. There is no store to buy from and no DRM server to check in with.',
   },
   {
     q: 'Is it really free?',
-    a: 'Yes. No price, no ads, no subscription, no paid tier holding a feature hostage.',
+    a: 'Yes. No price, no ads, no subscription, and nothing locked behind a paid tier.',
   },
   {
     q: 'What happens offline?',
@@ -51,8 +51,8 @@ const faqs = [
 
         <p class="hero__lede">
           BookSkim is an EPUB reader for Android. Turn on Fast Skim and the
-          start of every word goes bold, so your eye stops re-reading the same
-          line and starts moving down the page.
+          start of every word goes bold. Your eye has something to land on, so
+          it stops sliding back over the line you just read.
         </p>
 
         <div class="hero__cta">
@@ -60,7 +60,7 @@ const faqs = [
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.6 1.8 13.8 12 3.6 22.2a1 1 0 0 1-.6-.9V2.7a1 1 0 0 1 .6-.9Zm10.9 10.9 2.3 2.3-10.9 6.3 8.6-8.6Zm3.2-3.2 2.8 1.6a1 1 0 0 1 0 1.8l-2.8 1.6-2.5-2.5 2.5-2.5ZM5.9 2.7 16.8 9l-2.3 2.3-8.6-8.6Z"/></svg>
             Get it on Google Play
           </a>
-          <a class="hero__link" href="#fast-skim">See how it reads</a>
+          <a class="hero__link" href="#fast-skim">Try it below</a>
         </div>
 
         <ul class="hero__facts">
@@ -97,9 +97,9 @@ const faqs = [
 
         <div class="skim__aside">
           <p class="skim__aside-p">
-            The bold prefix gives your eye a fixed point on every word, so it
-            stops drifting back over lines it already read. Less subvocalising,
-            fewer restarts, more pages in a sitting.
+            The bold prefix gives your eye a fixed point on every word. It
+            reads faster for some people and does nothing for others, which is
+            why it is a switch and not the default.
           </p>
           <p class="note skim__aside-note">off for poetry, on for textbooks</p>
         </div>
@@ -113,16 +113,17 @@ const faqs = [
       <p class="eyebrow">Everything else it does</p>
       <h2 class="h2">A proper EPUB reader<br />underneath.</h2>
       <p class="lede">
-        Fast Skim is the reason to install it. This is the reason to keep it.
+        You spend most of your time in the ordinary parts of a reader. Those
+        work too.
       </p>
 
       <div class="bento">
         <article class="card bento__a">
           <div class="bento__text">
-            <h3>Tap a word, get the word</h3>
+            <h3>Long-press for a definition</h3>
             <p>
-              Long-press anything you do not know and the definition comes up
-              over the page. No browser, no tab to close, no losing your line.
+              The meaning comes up over the page. No browser, no tab to close,
+              and you keep your place.
             </p>
           </div>
           <Shot src={url("/assets/sheet-dictionary.png")} alt="A dictionary definition shown over a page of text" w={913} h={1100} plain />
@@ -131,7 +132,7 @@ const faqs = [
         <article class="card bento__b">
           <div class="bento__text">
             <h3>Highlights that stay put</h3>
-            <p>Mark the lines worth keeping. They collect in one place.</p>
+            <p>Mark a passage and it goes in a list you can come back to.</p>
           </div>
           <Shot src={url("/assets/crop-app-highlight.jpg")} alt="A highlighted passage in BookSkim" w={672} h={440} />
         </article>
@@ -150,10 +151,11 @@ const faqs = [
 
         <article class="card bento__d">
           <div class="bento__text">
-            <h3>Your folder of EPUBs, finally readable</h3>
+            <h3>The EPUBs you already have</h3>
             <p>
-              Import from your device and start reading in seconds. Chapters,
-              images, table of contents and full-text search all work.
+              Open an EPUB from your files or your downloads folder.
+              Chapters, images, table of contents and full-text search all
+              work.
             </p>
           </div>
           <Shot src={url("/assets/phones-library.png")} alt="The BookSkim library, as a list of books and as a shelf of covers" w={636} h={900} plain />
@@ -236,7 +238,7 @@ const faqs = [
       <img src={url("/assets/mascot.png")} alt="" width="140" height="145" class="end__mascot" />
       <h2 class="h2">Free. Offline. Yours.</h2>
       <p class="lede end__lede">
-        You already have the books. This is the part that reads them.
+        You already have the books. This opens them.
       </p>
       <a class="btn" href={play}>
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.6 1.8 13.8 12 3.6 22.2a1 1 0 0 1-.6-.9V2.7a1 1 0 0 1 .6-.9Zm10.9 10.9 2.3 2.3-10.9 6.3 8.6-8.6Zm3.2-3.2 2.8 1.6a1 1 0 0 1 0 1.8l-2.8 1.6-2.5-2.5 2.5-2.5ZM5.9 2.7 16.8 9l-2.3 2.3-8.6-8.6Z"/></svg>
