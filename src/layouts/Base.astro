@@ -47,75 +47,6 @@ const themes = [
     <a class="skip" href="#main">Skip to content</a>
 
     <header class="nav">
-      {import.meta.env.DEV && (
-        <style is:inline>
-  /* --- hire-me callout, placement variants ---
-     Dev only. `body[data-hire]` picks one; the tuner panel sets it. The
-     default is `footer`, which is what ships. --- */
-  .hire-strip, .hire-link, .hire-pill, .hire-note { display: none; }
-
-  /* strip: a thin line above the nav pill */
-  .hire-strip {
-    max-width: 1120px;
-    margin: 0 auto .5rem;
-    text-align: center;
-  }
-  .hire-strip a {
-    display: inline-block;
-    padding: .3rem 1rem;
-    background: var(--card);
-    border-radius: 999px;
-    box-shadow: var(--shadow);
-    color: var(--ink-soft);
-    text-decoration: none;
-    font-size: .88rem;
-  }
-  .hire-strip strong { color: var(--accent); }
-
-  /* link: one more item in the nav row */
-  .hire-link { color: var(--accent) !important; font-weight: 600; }
-
-  /* pill: an outlined chip beside the Get it button */
-  .hire-pill {
-    padding: .35rem .8rem;
-    border-radius: 999px;
-    box-shadow: inset 0 0 0 1.5px var(--accent);
-    color: var(--accent);
-    text-decoration: none;
-    font-size: .88rem;
-    font-weight: 600;
-    white-space: nowrap;
-  }
-  .hire-pill:hover { background: var(--accent); color: var(--card); }
-
-  /* note: a handwritten aside hanging under the pill */
-  .hire-note {
-    position: absolute;
-    top: 100%;
-    right: max(1rem, calc(50% - 560px + 1.5rem));
-    margin: .35rem 0 0;
-    font-family: 'Caveat', cursive;
-    font-size: 1.2rem;
-    transform: rotate(-2deg);
-  }
-  .hire-note a { color: var(--accent); text-decoration: none; }
-  .hire-note a:hover { text-decoration: underline; }
-
-  body[data-hire='strip'] .hire-strip { display: block; }
-  body[data-hire='link'] .hire-link { display: inline; }
-  body[data-hire='pill'] .hire-pill { display: inline-flex; }
-  body[data-hire='note'] .hire-note { display: block; }
-  /* Only ever show one placement at a time. */
-  body[data-hire]:not([data-hire='footer']) .foot__hire { display: none; }
-        </style>
-      )}
-      {import.meta.env.DEV && (
-        <div class="hire-strip">
-          <a href={hire} target="_blank" rel="noopener">
-            Looking for a design? <strong>Hire me!</strong>
-          </a>
-        </div>
-      )}
       <div class="nav__pill">
         <a class="nav__brand" href={url("/")}>
           <img src={url("/assets/favicon-512.png")} alt="" width="34" height="34" />
@@ -126,15 +57,9 @@ const themes = [
           <a href={url("/") + "#fast-skim"}>Fast Skim</a>
           <a href={url("/") + "#features"}>Features</a>
           <a href={url("/") + "#faq"}>FAQ</a>
-          {import.meta.env.DEV && (
-            <a class="hire-link" href={hire} target="_blank" rel="noopener">Hire me</a>
-          )}
         </nav>
 
         <div class="nav__right">
-          {import.meta.env.DEV && (
-            <a class="hire-pill" href={hire} target="_blank" rel="noopener">Hire me!</a>
-          )}
           <fieldset class="themes" id="themes">
             <legend class="sr-only">Reading theme</legend>
             {themes.map((t) => (
@@ -150,11 +75,9 @@ const themes = [
         </div>
       </div>
 
-      {import.meta.env.DEV && (
-        <p class="hire-note">
-          <a href={hire} target="_blank" rel="noopener">looking for a design? hire me!</a>
-        </p>
-      )}
+      <p class="hire-note">
+        <a href={hire} target="_blank" rel="noopener">looking for a designer? hire me!</a>
+      </p>
     </header>
 
     <main id="main">
@@ -300,6 +223,20 @@ const themes = [
         gap: .75rem;
         flex: none;
       }
+
+      /* A handwritten aside hanging off the right end of the nav pill.
+         Same trick as the margin notes further down the page. */
+      .hire-note {
+        position: absolute;
+        top: 100%;
+        right: max(1rem, calc(50% - 560px + 1.5rem));
+        margin: .35rem 0 0;
+        font-family: 'Caveat', cursive;
+        font-size: 1.2rem;
+        transform: rotate(-2deg);
+      }
+      .hire-note a { color: var(--accent); text-decoration: none; }
+      .hire-note a:hover { text-decoration: underline; }
 
       /* --- theme switcher: the app's four reading themes --- */
       .themes {
