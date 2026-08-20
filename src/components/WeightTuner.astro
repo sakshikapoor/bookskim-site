@@ -7,6 +7,17 @@ const modes = [
   { id: 'skim', label: 'Fast Skim' },
   { id: 'bold', label: 'Bold' },
 ];
+
+// Where the "Hire me" callout sits. `footer` is what ships today; the rest
+// are the near-the-nav options to compare.
+const hires = [
+  { id: 'footer', label: 'Footer' },
+  { id: 'link', label: 'Nav link' },
+  { id: 'pill', label: 'Nav pill' },
+  { id: 'strip', label: 'Strip' },
+  { id: 'note', label: 'Margin note' },
+  { id: 'none', label: 'Off' },
+];
 ---
 {import.meta.env.DEV && (
   <aside class="tuner" aria-label="Fast Skim weight tuner">
@@ -42,6 +53,18 @@ const modes = [
           <label class="tuner__mode">
             <input type="radio" name="h1mode" value={m.id} checked={m.id === 'skim'} />
             <span>{m.label}</span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+
+    <fieldset class="tuner__modes" id="t-hire">
+      <legend>Hire me callout</legend>
+      <div class="tuner__seg tuner__seg--2">
+        {hires.map((h) => (
+          <label class="tuner__mode">
+            <input type="radio" name="hire" value={h.id} checked={h.id === 'footer'} />
+            <span>{h.label}</span>
           </label>
         ))}
       </div>
@@ -105,6 +128,21 @@ const modes = [
         document.getElementById('t-h1').addEventListener('change', (e) => {
           document.body.dataset.h1 = e.target.value;
         });
+
+        // Hire-me placement. Kept in localStorage so a reload does not throw
+        // away the option you were looking at.
+        const hireBox = document.getElementById('t-hire');
+        const setHire = (v) => {
+          document.body.dataset.hire = v;
+          try { localStorage.setItem('bookskim-hire', v); } catch {}
+        };
+        hireBox.addEventListener('change', (e) => setHire(e.target.value));
+        const savedHire = (function () {
+          try { return localStorage.getItem('bookskim-hire'); } catch { return null; }
+        })() || 'footer';
+        const hireInput = hireBox.querySelector('input[value="' + savedHire + '"]');
+        if (hireInput) hireInput.checked = true;
+        setHire(hireInput ? savedHire : 'footer');
       })();
     </script>
   </aside>
@@ -165,6 +203,9 @@ const modes = [
     background: var(--card-2);
     border-radius: 999px;
   }
+  /* Six options wrap onto three rows, so the pill shape has to go. */
+  .tuner__seg--2 { grid-template-columns: repeat(2, 1fr); border-radius: 12px; }
+  .tuner__seg--2 .tuner__mode > span { border-radius: 10px; }
   .tuner label.tuner__mode { margin: 0; min-width: 0; }
   .tuner__mode input { position: absolute; opacity: 0; width: 0; height: 0; }
   .tuner label.tuner__mode > span {
