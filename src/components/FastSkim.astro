@@ -1,0 +1,14 @@
+---
+import { skim } from '../lib/fastskim';
+
+interface Props {
+  text: string;
+  class?: string;
+}
+
+const { text, class: className = '' } = Astro.props;
+const pieces = skim(text);
+---
+<span class:list={['fs', className]}>{pieces.map((p) =>
+  typeof p === 'string' ? p : <><b>{p.head}</b>{p.tail}</>
+)}</span>

@@ -1,0 +1,17 @@
+{
+  "name": "bookskim-web",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "devDependencies": {
+    "@fontsource-variable/bricolage-grotesque": "^5.3.0",
+    "@fontsource-variable/literata": "^5.3.0",
+    "@fontsource/caveat": "^5.3.0",
+    "astro": "^7.2.4"
+  }
+}

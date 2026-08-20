@@ -1,0 +1,41 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  class?: string;
+  loading?: 'eager' | 'lazy';
+}
+const { src, alt, class: className = '', loading = 'lazy' } = Astro.props;
+---
+<div class:list={['phone', className]}>
+  <div class="phone__screen">
+    <img src={src} alt={alt} width="720" height="1600" loading={loading} decoding="async" />
+  </div>
+</div>
+
+<style>
+  .phone {
+    background: #17161a;
+    border-radius: 34px;
+    padding: 7px;
+    box-shadow:
+      0 0 0 1px #ffffff1a inset,
+      0 22px 50px -18px #00000059;
+    width: 100%;
+    max-width: 300px;
+  }
+  .phone__screen {
+    border-radius: 28px;
+    overflow: hidden;
+    background: #fff;
+    aspect-ratio: 720 / 1600;
+  }
+  .phone__screen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+  /* Cards that only want the top of a screenshot. */
+  .phone--crop .phone__screen { aspect-ratio: 720 / 1080; }
+</style>

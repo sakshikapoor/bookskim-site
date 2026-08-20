@@ -1,0 +1,19 @@
+AGENTS.md
+vibe.md 
+
+# deps
+node_modules/
+
+# astro
+dist/
+.astro/
+
+# env
+.env
+.env.production
+
+# os
+.DS_Store
+
+# local design references
+reference/

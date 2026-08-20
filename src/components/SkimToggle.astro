@@ -1,0 +1,83 @@
+---
+interface Props {
+  id: string;
+  class?: string;
+}
+const { id, class: className = '' } = Astro.props;
+---
+<label class:list={['toggle', className]} for={id}>
+  <span class="toggle__bolt" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg>
+  </span>
+  <span class="toggle__label">
+    <strong>Fast Skim Mode</strong>
+    <span>Read faster with text anchors</span>
+  </span>
+  <input type="checkbox" id={id} data-skim-toggle />
+  <span class="toggle__track" aria-hidden="true"><span class="toggle__knob"></span></span>
+</label>
+
+<style>
+  /* Shaped like the switch in the app. */
+  .toggle {
+    display: flex;
+    align-items: center;
+    gap: .85rem;
+    padding: .7rem .85rem;
+    background: var(--card-2);
+    border-radius: 999px;
+    cursor: pointer;
+    user-select: none;
+    max-width: 420px;
+  }
+  .toggle input { position: absolute; opacity: 0; width: 0; height: 0; }
+
+  .toggle__bolt {
+    display: grid;
+    place-items: center;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    flex: none;
+    transition: background .2s ease;
+  }
+  .toggle__bolt svg { width: 17px; height: 17px; }
+
+  .toggle__label {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+    margin-right: auto;
+    min-width: 0;
+  }
+  .toggle__label strong { font-size: 1rem; font-weight: 700; }
+  .toggle__label > span { font-size: .85rem; color: var(--ink-soft); }
+
+  .toggle__track {
+    width: 52px; height: 31px;
+    border-radius: 999px;
+    background: var(--ink-faint);
+    padding: 3px;
+    flex: none;
+    transition: background .2s ease;
+  }
+  .toggle__knob {
+    display: block;
+    width: 25px; height: 25px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 3px #0000003d;
+    transition: transform .2s ease;
+  }
+  .toggle input:checked ~ .toggle__track { background: var(--accent); }
+  .toggle input:checked ~ .toggle__track .toggle__knob { transform: translateX(21px); }
+  .toggle input:focus-visible ~ .toggle__track {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 400px) {
+    .toggle__label > span { display: none; }
+  }
+</style>

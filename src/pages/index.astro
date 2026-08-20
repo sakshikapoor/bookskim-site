@@ -1,0 +1,683 @@
+---
+import Base from '../layouts/Base.astro';
+import FastSkim from '../components/FastSkim.astro';
+import Phone from '../components/Phone.astro';
+import Shot from '../components/Shot.astro';
+import SkimToggle from '../components/SkimToggle.astro';
+import WeightTuner from '../components/WeightTuner.astro';
+import { url } from '../lib/url';
+
+const play = 'https://play.google.com/store/apps/details?id=com.wildkidstudio.bookskim';
+
+const demo =
+  'On an exceptionally hot evening early in July a young man came out of the garret in which he lodged in S. Place and walked slowly, as though in hesitation, towards K. bridge.';
+
+const faqs = [
+  {
+    q: 'What does Fast Skim actually do?',
+    a: 'It bolds the first few letters of every word. Your eye lands on the bold part, your brain fills in the rest, and you stop backtracking over the same line. It is a typography change, nothing else — the words are untouched. Toggle it per book, whenever you want.',
+  },
+  {
+    q: 'Which files can I read?',
+    a: 'EPUB files you already have. Import one from your device and it lands in your library. No store, no DRM server, no lock-in.',
+  },
+  {
+    q: 'Is it really free?',
+    a: 'Yes. No price, no ads, no subscription, no paid tier holding a feature hostage.',
+  },
+  {
+    q: 'What happens offline?',
+    a: 'Everything except two things. Reading, highlights, bookmarks, themes and stats all work with the SIM out. Only the dictionary lookup and web search need a connection, and only when you tap them.',
+  },
+  {
+    q: 'Where do my books and highlights live?',
+    a: 'On your phone. There is no account to make and nothing syncs anywhere. Uninstall the app and it all goes with it.',
+  },
+];
+---
+
+<Base
+  title="BookSkim — EPUB reader with Fast Skim"
+  description="An offline EPUB reader for Android. Fast Skim bolds the start of each word so you read quicker. No ads, no account, no tracking."
+>
+  <!-- ================= hero ================= -->
+  <section class="hero">
+    <div class="wrap hero__in">
+      <div class="hero__copy">
+        <h1 class="hero__h1">
+          <FastSkim text="Finish the books" /><br />
+          <FastSkim text="you" /> <span class="mark"><FastSkim text="start" /></span><FastSkim text="." />
+        </h1>
+
+        <SkimToggle id="skim-hero" class="hero__toggle" />
+
+        <p class="hero__lede">
+          BookSkim is an EPUB reader for Android. Turn on Fast Skim and the
+          start of every word goes bold, so your eye stops re-reading the same
+          line and starts moving down the page.
+        </p>
+
+        <div class="hero__cta">
+          <a class="btn" href={play}>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.6 1.8 13.8 12 3.6 22.2a1 1 0 0 1-.6-.9V2.7a1 1 0 0 1 .6-.9Zm10.9 10.9 2.3 2.3-10.9 6.3 8.6-8.6Zm3.2-3.2 2.8 1.6a1 1 0 0 1 0 1.8l-2.8 1.6-2.5-2.5 2.5-2.5ZM5.9 2.7 16.8 9l-2.3 2.3-8.6-8.6Z"/></svg>
+            Get it on Google Play
+          </a>
+          <a class="hero__link" href="#fast-skim">See how it reads</a>
+        </div>
+
+        <ul class="hero__facts">
+          <li>Free</li>
+          <li>No ads</li>
+          <li>No account</li>
+          <li>Works offline</li>
+        </ul>
+      </div>
+
+      <div class="hero__shot">
+        <Phone src={url("/assets/hero-catcher.jpg")} alt="A book open in BookSkim with Fast Skim mode switched on" loading="eager" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= fast skim ================= -->
+  <section id="fast-skim" class="skim">
+    <div class="wrap">
+      <h2 class="h2">Fast Skim</h2>
+      <p class="lede">
+        Flip the switch and read the paragraph twice, once each way. That is
+        the entire feature — no course, no training, no settings to tune.
+      </p>
+
+      <div class="skim__grid">
+        <div class="card skim__demo">
+          <p class="skim__meta">Crime and Punishment &middot; Chapter One</p>
+          <div class="skim__stage">
+            <p class="skim__text" id="skim-text">
+              <FastSkim text={demo} />
+            </p>
+            <span class="skim__hop" id="skim-hop" aria-hidden="true"></span>
+          </div>
+
+          <SkimToggle id="skim-demo" class="skim__toggle" />
+        </div>
+
+        <div class="skim__aside">
+          <p class="skim__aside-p">
+            The bold prefix gives your eye a fixed point on every word, so it
+            stops drifting back over lines it already read. Less subvocalising,
+            fewer restarts, more pages in a sitting.
+          </p>
+          <p class="note skim__aside-note">off for poetry, on for textbooks</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= features ================= -->
+  <section id="features" class="feats">
+    <div class="wrap">
+      <p class="eyebrow">Everything else it does</p>
+      <h2 class="h2">A proper EPUB reader<br />underneath.</h2>
+      <p class="lede">
+        Fast Skim is the reason to install it. This is the reason to keep it.
+      </p>
+
+      <div class="bento">
+        <article class="card bento__a">
+          <div class="bento__text">
+            <h3>Tap a word, get the word</h3>
+            <p>
+              Long-press anything you do not know and the definition comes up
+              over the page. No browser, no tab to close, no losing your line.
+            </p>
+          </div>
+          <Shot src={url("/assets/crop-app-dictionary.jpg")} alt="A dictionary definition shown over a page of text" w={720} h={960} />
+        </article>
+
+        <article class="card bento__b">
+          <div class="bento__text">
+            <h3>Highlights that stay put</h3>
+            <p>Mark the lines worth keeping. They collect in one place.</p>
+          </div>
+          <Shot src={url("/assets/crop-app-highlight.jpg")} alt="A highlighted passage in BookSkim" w={672} h={440} />
+        </article>
+
+        <article class="card bento__c">
+          <div class="bento__text">
+            <h3>Four themes, real AMOLED</h3>
+            <p>
+              Light, Sepia, Dark and a true-black one that turns the pixels
+              off. Serif or sans, any size.
+            </p>
+            <p class="note">the dots up top change this page too</p>
+          </div>
+          <Shot src={url("/assets/crop-app-themes.jpg")} alt="BookSkim's theme picker showing Light, Sepia, Dark and AMOLED" w={720} h={600} />
+        </article>
+
+        <article class="card bento__d">
+          <div class="bento__text">
+            <h3>Your folder of EPUBs, finally readable</h3>
+            <p>
+              Import from your device and start reading in seconds. Chapters,
+              images, table of contents and full-text search all work.
+            </p>
+          </div>
+          <Shot src={url("/assets/crop-app-library.jpg")} alt="The BookSkim library grid of book covers" w={720} h={930} />
+        </article>
+
+        <article class="card bento__e">
+          <div class="bento__text">
+            <h3>A streak, and nothing built on top of it</h3>
+            <p>
+              It counts the days you read and the time you spent. There is no
+              leaderboard, no feed, and nobody else can see it. Just you and
+              the number.
+            </p>
+          </div>
+          <Shot src={url("/assets/crop-app-streak.jpg")} alt="Reading streak and time-read statistics" w={550} h={755} />
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= anti-features ================= -->
+  <section class="wont">
+    <div class="wrap">
+      <p class="eyebrow">Why it stays quiet</p>
+      <h2 class="h2 wont__h">
+        BookSkim won&rsquo;t <span class="wont__em">ask you for anything.</span>
+      </h2>
+      <p class="lede">No sign-up screen. No ads. No notification asking where you went.</p>
+
+      <dl class="wont__list">
+        <div>
+          <dt>No account</dt>
+          <dd>No email, no password, no profile. Install it and read.</dd>
+        </div>
+        <div>
+          <dt>No ads, ever</dt>
+          <dd>Not a banner, not an interstitial, not a sponsored recommendation.</dd>
+        </div>
+        <div>
+          <dt>No tracking</dt>
+          <dd>
+            No analytics and no behavioural profiling. Nobody knows what you
+            read, including us.
+          </dd>
+        </div>
+        <div>
+          <dt>Offline by default</dt>
+          <dd>
+            Read on a plane, on the metro, with the SIM out. The app only
+            reaches the internet when you tap a word or send a bug report.
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ================= faq ================= -->
+  <section id="faq" class="faq">
+    <div class="wrap">
+      <p class="eyebrow">Before you install</p>
+      <h2 class="h2">Questions.</h2>
+
+      <div class="faq__list">
+        {faqs.map((f) => (
+          <details class="faq__item">
+            <summary>
+              <span>{f.q}</span>
+              <span class="faq__sign" aria-hidden="true"></span>
+            </summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= closing ================= -->
+  <section class="end">
+    <div class="wrap end__in">
+      <img src={url("/assets/mascot.png")} alt="" width="140" height="145" class="end__mascot" />
+      <h2 class="h2">Free. Offline. Yours.</h2>
+      <p class="lede end__lede">
+        You already have the books. This is the part that reads them.
+      </p>
+      <a class="btn" href={play}>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.6 1.8 13.8 12 3.6 22.2a1 1 0 0 1-.6-.9V2.7a1 1 0 0 1 .6-.9Zm10.9 10.9 2.3 2.3-10.9 6.3 8.6-8.6Zm3.2-3.2 2.8 1.6a1 1 0 0 1 0 1.8l-2.8 1.6-2.5-2.5 2.5-2.5ZM5.9 2.7 16.8 9l-2.3 2.3-8.6-8.6Z"/></svg>
+        Get it on Google Play
+      </a>
+    </div>
+  </section>
+
+  <WeightTuner />
+
+  <script is:inline>
+    (function () {
+      // Every Fast Skim switch on the page drives the same state, so the
+      // headline and the demo paragraph never disagree.
+      const boxes = document.querySelectorAll('[data-skim-toggle]');
+      const apply = (on) => {
+        document.body.classList.toggle('skim-on', on);
+        boxes.forEach((b) => { b.checked = on; });
+        on ? hop.start() : hop.stop();
+      };
+
+      // The marker walks the bold prefixes in reading order — the path your
+      // eye takes once the anchors are there.
+      const hop = (function () {
+        const stage = document.getElementById('skim-hop');
+        const text = document.getElementById('skim-text');
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+        let spots = [];
+        let i = 0;
+        let timer = null;
+        let anim = null;
+        let running = false;
+
+        function measure() {
+          if (!stage || !text) return;
+          const base = text.parentElement.getBoundingClientRect();
+          spots = [...text.querySelectorAll('b')].map((b) => {
+            const r = b.getBoundingClientRect();
+            return {
+              x: r.left - base.left + r.width / 2 - 3.5,
+              y: r.bottom - base.top + 2,
+            };
+          });
+        }
+
+        function step() {
+          if (!running || spots.length < 2) return;
+          const from = spots[i];
+          i = (i + 1) % spots.length;
+          const to = spots[i];
+          // A jump back to the start of the paragraph should not arc.
+          const lift = to.y === from.y ? 9 : 4;
+          anim = stage.animate(
+            [
+              { transform: `translate(${from.x}px, ${from.y}px)` },
+              { transform: `translate(${(from.x + to.x) / 2}px, ${Math.min(from.y, to.y) - lift}px)` },
+              { transform: `translate(${to.x}px, ${to.y}px)` },
+            ],
+            { duration: 260, easing: 'ease-in-out', fill: 'forwards' }
+          );
+          timer = setTimeout(step, 300);
+        }
+
+        function start() {
+          if (!stage || reduce.matches || running) return;
+          measure();
+          if (spots.length < 2) return;
+          running = true;
+          i = 0;
+          stage.style.transform = `translate(${spots[0].x}px, ${spots[0].y}px)`;
+          timer = setTimeout(step, 350);
+        }
+
+        function stop() {
+          running = false;
+          clearTimeout(timer);
+          anim?.cancel();
+        }
+
+        // Only animate while the demo is actually on screen.
+        if (stage) {
+          new IntersectionObserver((es) => {
+            const on = document.body.classList.contains('skim-on');
+            es[0].isIntersecting ? on && start() : stop();
+          }, { threshold: 0.2 }).observe(stage.parentElement);
+
+          let t;
+          addEventListener('resize', () => {
+            clearTimeout(t);
+            t = setTimeout(() => {
+              if (!running) return;
+              stop();
+              start();
+            }, 200);
+          });
+        }
+
+        return { start, stop };
+      })();
+
+      boxes.forEach((b) => b.addEventListener('change', () => apply(b.checked)));
+      apply(false);
+    })();
+  </script>
+</Base>
+
+<style>
+  /* ---------- hero ---------- */
+  .hero { padding-top: clamp(2.5rem, 6vw, 4.5rem); }
+
+  .hero__in {
+    display: grid;
+    gap: clamp(2.5rem, 6vw, 4rem);
+    align-items: center;
+  }
+
+  .hero__h1 {
+    font-size: clamp(2.6rem, 11vw, 5.4rem);
+    letter-spacing: -.035em;
+  }
+  .hero__h1 :global(.fs) { font-weight: var(--fs-normal); }
+  :global(body.skim-on) .hero__h1 :global(.fs b) { font-weight: var(--fs-bold); }
+
+  .hero__toggle { margin-top: 2.4rem; }
+
+  .hero__lede {
+    color: var(--ink-soft);
+    font-size: 1.12rem;
+    margin-top: 1.75rem;
+    max-width: 44ch;
+  }
+
+  .hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.75rem;
+    margin-top: 2rem;
+  }
+  .hero__link {
+    color: var(--ink-soft);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .hero__link:hover { color: var(--ink); }
+
+  .hero__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 1.4rem;
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+    font-size: .93rem;
+    color: var(--ink-faint);
+  }
+  .hero__facts li { display: flex; align-items: center; gap: .5rem; }
+  .hero__facts li + li::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: currentColor;
+    margin-right: .9rem;
+  }
+
+  .hero__shot { justify-self: center; }
+
+  /* ---------- fast skim ---------- */
+  .skim { border-top: 1px solid var(--line); }
+
+  .skim__grid {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2.75rem;
+  }
+
+  .skim__demo { padding: clamp(1.5rem, 4vw, 2.25rem); }
+  .skim__toggle { margin-top: 1.75rem; }
+
+  .skim__meta {
+    color: var(--ink-faint);
+    font-size: .85rem;
+    margin-bottom: 1rem;
+  }
+
+  /* The app renders Fast Skim in a sans, and that is why the effect reads
+     there: 400 against 700 is a clear step without looking broken. */
+  .skim__stage { position: relative; }
+
+  /* A marker that hops from one bold prefix to the next, which is roughly
+     what your eye does once Fast Skim is on. */
+  .skim__hop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity .25s ease;
+    pointer-events: none;
+    will-change: transform;
+  }
+  :global(body.skim-on) .skim__hop { opacity: 1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skim__hop { display: none; }
+  }
+
+  .skim__text {
+    font-size: clamp(1.12rem, 2.4vw, 1.35rem);
+    line-height: 1.7;
+    letter-spacing: -.005em;
+  }
+
+
+  /* toggle, shaped like the one in the app */
+  .toggle {
+    display: flex;
+    align-items: center;
+    gap: .85rem;
+    margin-top: 1.75rem;
+    padding: .7rem .85rem;
+    background: var(--card-2);
+    border-radius: 999px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .toggle input {
+    position: absolute;
+    opacity: 0;
+    width: 0; height: 0;
+  }
+  .toggle__bolt {
+    display: grid;
+    place-items: center;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    flex: none;
+  }
+  .toggle__bolt svg { width: 17px; height: 17px; }
+  .toggle__label {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+    margin-right: auto;
+    min-width: 0;
+  }
+  .toggle__label strong {
+    font-family: 'Bricolage Grotesque Variable', system-ui, sans-serif;
+    font-size: 1rem;
+  }
+  .toggle__label span { font-size: .85rem; color: var(--ink-soft); }
+  .toggle__track {
+    width: 52px; height: 31px;
+    border-radius: 999px;
+    background: var(--ink-faint);
+    padding: 3px;
+    flex: none;
+    transition: background .2s ease;
+  }
+  .toggle__knob {
+    display: block;
+    width: 25px; height: 25px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 3px #0000003d;
+    transition: transform .2s ease;
+  }
+  .toggle input:checked ~ .toggle__track { background: var(--accent); }
+  .toggle input:checked ~ .toggle__track .toggle__knob { transform: translateX(21px); }
+  .toggle input:focus-visible ~ .toggle__track {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .skim__aside { color: var(--ink-soft); }
+  .skim__aside-p { max-width: 42ch; }
+  .skim__aside-note { margin-top: 1rem; color: var(--ink-faint); }
+
+  /* ---------- bento ---------- */
+  .feats { border-top: 1px solid var(--line); }
+
+  .bento {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 2.75rem;
+  }
+
+  /* Text sits at the top of every card, the screenshot sits under it. The
+     shot bleeds a little past the padding so the card does not feel boxed. */
+  .bento article {
+    display: flex;
+    flex-direction: column;
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+  }
+
+  .bento__text { margin-bottom: 2rem; }
+  .bento__text h3 {
+    font-size: clamp(1.3rem, 2.6vw, 1.7rem);
+    margin-bottom: .7rem;
+  }
+  .bento__text p { color: var(--ink-soft); max-width: 44ch; }
+  .bento__text .note { margin-top: .9rem; color: var(--ink-faint); }
+
+  .bento :global(.shot) {
+    margin-top: auto;
+    align-self: center;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  /* ---------- won't ---------- */
+  .wont { border-top: 1px solid var(--line); }
+  .wont__h { max-width: 16ch; }
+  .wont__em { color: var(--accent); }
+
+  .wont__list {
+    margin: 3rem 0 0;
+    border-top: 1px solid var(--line);
+  }
+  .wont__list > div {
+    display: grid;
+    gap: .35rem;
+    padding-block: 1.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .wont__list dt {
+    font-family: 'Bricolage Grotesque Variable', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+  }
+  .wont__list dd { margin: 0; color: var(--ink-soft); }
+
+  /* ---------- faq ---------- */
+  .faq { border-top: 1px solid var(--line); }
+  .faq__list { margin-top: 2.5rem; border-top: 1px solid var(--line); }
+
+  .faq__item { border-bottom: 1px solid var(--line); }
+  .faq__item summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 1.4rem;
+    cursor: pointer;
+    list-style: none;
+    font-family: 'Bricolage Grotesque Variable', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+  }
+  .faq__item summary::-webkit-details-marker { display: none; }
+  .faq__sign {
+    position: relative;
+    width: 16px; height: 16px;
+    flex: none;
+    color: var(--ink-faint);
+  }
+  .faq__sign::before,
+  .faq__sign::after {
+    content: '';
+    position: absolute;
+    inset: 50% 0 auto;
+    height: 2px;
+    background: currentColor;
+    border-radius: 2px;
+    transition: transform .2s ease;
+  }
+  .faq__sign::after { transform: rotate(90deg); }
+  .faq__item[open] .faq__sign::after { transform: rotate(0deg); }
+
+  .faq__item p {
+    color: var(--ink-soft);
+    padding-bottom: 1.5rem;
+    max-width: 62ch;
+  }
+
+  /* ---------- closing ---------- */
+  .end { border-top: 1px solid var(--line); text-align: center; }
+  .end__in { display: grid; justify-items: center; }
+  .end__mascot { width: 110px; height: auto; margin-bottom: 1.5rem; }
+  .end__lede { margin-bottom: 2rem; }
+
+  /* ---------- larger screens ---------- */
+  @media (min-width: 760px) {
+    .skim__grid { grid-template-columns: 1.55fr 1fr; align-items: end; }
+    .skim__aside { padding-bottom: 1rem; }
+
+    .bento { grid-template-columns: repeat(2, 1fr); }
+    .bento article { min-height: 420px; }
+  }
+
+  @media (min-width: 1000px) {
+    .hero__in { grid-template-columns: 1.15fr .85fr; }
+    .hero__shot { justify-self: end; }
+    .hero :global(.phone) { max-width: 330px; }
+
+    .bento { grid-template-columns: repeat(6, 1fr); }
+    .bento__a { grid-column: span 4; }
+    .bento__b { grid-column: span 2; }
+    .bento__c { grid-column: span 2; }
+    .bento__d { grid-column: span 4; }
+    .bento__e { grid-column: span 6; }
+
+    .bento article { min-height: 340px; }
+
+    /* The wide cards read left-to-right: words, then the screen. */
+    .bento article.bento__a,
+    .bento article.bento__d,
+    .bento article.bento__e {
+      flex-direction: row;
+      align-items: center;
+      gap: 2.5rem;
+    }
+    .bento__a .bento__text,
+    .bento__d .bento__text,
+    .bento__e .bento__text {
+      flex: 1;
+      margin-bottom: 0;
+    }
+    .bento__a :global(.shot),
+    .bento__d :global(.shot),
+    .bento__e :global(.shot) {
+      margin: 0;
+      flex: none;
+      align-self: center;
+      width: 44%;
+      max-width: 330px;
+    }
+    .bento article.bento__e { min-height: 0; }
+    .bento__e :global(.shot) { width: 30%; max-width: 240px; }
+
+    .wont__list { display: grid; grid-template-columns: repeat(2, 1fr); column-gap: 3rem; }
+  }
+</style>

@@ -1,0 +1,29 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  w: number;
+  h: number;
+  class?: string;
+}
+const { src, alt, w, h, class: className = '' } = Astro.props;
+---
+<figure class:list={['shot', className]}>
+  <img src={src} alt={alt} width={w} height={h} loading="lazy" decoding="async" />
+</figure>
+
+<style>
+  /* A slice of the app, not a whole phone. Keeps the cards from being 80%
+     empty bezel. */
+  .shot {
+    margin: 0;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px #0000001a,
+      0 18px 40px -18px #00000059;
+    line-height: 0;
+    max-width: 100%;
+  }
+  .shot img { width: 100%; height: auto; }
+</style>

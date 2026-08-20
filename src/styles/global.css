@@ -1,0 +1,208 @@
+@import '@fontsource-variable/bricolage-grotesque';
+@import '@fontsource-variable/literata';
+@import '@fontsource/caveat/400.css';
+@import '@fontsource/caveat/600.css';
+
+/* The site uses the app's own four reading themes. Sepia is the default. */
+:root,
+[data-theme='sepia'] {
+  --paper: #ece2cf;
+  --card: #f7f1e3;
+  --card-2: #f2ead8;
+  --ink: #3a3126;
+  --ink-soft: #3a312699;
+  --ink-faint: #3a312659;
+  --line: #3a31261f;
+  --accent: #3a5fd0;
+  --accent-soft: #3a5fd01a;
+  --mark: #ecc85c;
+  --shadow: 0 1px 2px #3a31260a, 0 12px 32px -12px #3a312624;
+}
+
+[data-theme='light'] {
+  --paper: #eeebe4;
+  --card: #fdfbf6;
+  --card-2: #f7f4ed;
+  --ink: #23201b;
+  --ink-soft: #23201b99;
+  --ink-faint: #23201b59;
+  --line: #23201b1f;
+  --accent: #3558cc;
+  --accent-soft: #3558cc14;
+  --mark: #f2d477;
+  --shadow: 0 1px 2px #23201b08, 0 12px 32px -12px #23201b1f;
+}
+
+[data-theme='dark'] {
+  --paper: #191817;
+  --card: #232120;
+  --card-2: #2a2826;
+  --ink: #e8e2d6;
+  --ink-soft: #e8e2d6a3;
+  --ink-faint: #e8e2d666;
+  --line: #e8e2d61f;
+  --accent: #93aaff;
+  --accent-soft: #93aaff1a;
+  --mark: #d9b64a;
+  --shadow: 0 1px 2px #0000004d, 0 12px 32px -12px #00000080;
+}
+
+[data-theme='amoled'] {
+  --paper: #000;
+  --card: #0c0c0c;
+  --card-2: #141414;
+  --ink: #ddd7cc;
+  --ink-soft: #ddd7cca3;
+  --ink-faint: #ddd7cc66;
+  --line: #ddd7cc1f;
+  --accent: #93aaff;
+  --accent-soft: #93aaff14;
+  --mark: #d9b64a;
+  --shadow: 0 0 0 1px #ffffff0f;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  /* Sans for the site, serif only where actual book text is shown. */
+  font-family: 'Bricolage Grotesque Variable', system-ui, sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.62;
+  overflow-x: hidden;
+  padding-bottom: 5.5rem;
+  transition: background .3s ease, color .3s ease;
+}
+
+h1, h2, h3, .display {
+  font-family: 'Bricolage Grotesque Variable', system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: -.025em;
+  line-height: 1.04;
+  margin: 0;
+}
+
+p { margin: 0; }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+
+.wrap {
+  width: 100%;
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+section { padding-block: clamp(4rem, 9vw, 7.5rem); }
+
+/* handwriting margin note */
+.note {
+  font-family: 'Caveat', cursive;
+  font-size: 1.45rem;
+  line-height: 1.15;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.eyebrow {
+  font-family: 'Literata Variable', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  margin-bottom: .6rem;
+}
+
+.h2 { font-size: clamp(2rem, 4.6vw, 3.25rem); }
+
+.lede {
+  color: var(--ink-soft);
+  font-size: 1.1rem;
+  margin-top: .9rem;
+  max-width: 46ch;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'Bricolage Grotesque Variable', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  padding: .85rem 1.5rem;
+  border-radius: 999px;
+  border: 0;
+  cursor: pointer;
+  transition: transform .18s ease, opacity .18s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn--sm { padding: .6rem 1.15rem; font-size: .92rem; }
+.btn svg { width: 1.1em; height: 1.1em; flex: none; }
+
+.card {
+  background: var(--card);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.mark { position: relative; white-space: nowrap; }
+.mark::before {
+  content: '';
+  position: absolute;
+  inset: 12% -.28em 8%;
+  background: var(--mark);
+  border-radius: .35em .6em .4em .5em;
+  transform: rotate(-.6deg);
+  z-index: -1;
+  opacity: .85;
+}
+
+.chip {
+  display: inline-block;
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  padding: 0 .3em;
+  white-space: nowrap;
+}
+
+/* Book text: the app ships Literata, so the page uses it for book text too. */
+.book {
+  font-family: 'Literata Variable', Georgia, serif;
+}
+
+/* Fast Skim typography.
+   Off by default — the page starts as ordinary text and the reader turns the
+   effect on, the same way they would in the app.
+   The two weights are variables so they can be tuned in one place. */
+:root {
+  --fs-normal: 400;
+  --fs-bold: 700;
+}
+
+.fs { font-weight: var(--fs-normal); }
+.fs b {
+  font-weight: inherit;
+  transition: font-weight .18s ease;
+}
+body.skim-on .fs b { font-weight: var(--fs-bold); }
