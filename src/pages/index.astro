@@ -88,12 +88,9 @@ const faqs = [
       <div class="skim__grid">
         <div class="card skim__demo">
           <p class="skim__meta">Crime and Punishment &middot; Chapter One</p>
-          <div class="skim__stage">
-            <p class="skim__text" id="skim-text">
-              <FastSkim text={demo} />
-            </p>
-            <span class="skim__hop" id="skim-hop" aria-hidden="true"></span>
-          </div>
+          <p class="skim__text" id="skim-text">
+            <FastSkim text={demo} />
+          </p>
 
           <SkimToggle id="skim-demo" class="skim__toggle" />
         </div>
@@ -261,80 +258,53 @@ const faqs = [
         on ? hop.start() : hop.stop();
       };
 
-      // The marker walks the bold prefixes in reading order, which is the path your
-      // eye takes once the anchors are there.
+      // The colour runs along the bold prefixes in reading order. It moves faster
+      // than you can read so it looks like one glide down the paragraph, not a
+      // ball landing on each word. The dev panel drives the pace.
       const hop = (function () {
-        const stage = document.getElementById('skim-hop');
         const text = document.getElementById('skim-text');
-        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-        let spots = [];
+        let marks = [];
         let i = 0;
         let timer = null;
-        let anim = null;
         let running = false;
 
-        function measure() {
-          if (!stage || !text) return;
-          const base = text.parentElement.getBoundingClientRect();
-          spots = [...text.querySelectorAll('b')].map((b) => {
-            const r = b.getBoundingClientRect();
-            return {
-              x: r.left - base.left + r.width / 2 - 3.5,
-              y: r.bottom - base.top + 2,
-            };
-          });
+        const pace = () => Number(document.body.dataset.walkMs) || 120;
+
+        function light(n) {
+          marks.forEach((b, k) => b.classList.toggle('lit', k === n));
         }
 
         function step() {
-          if (!running || spots.length < 2) return;
-          const from = spots[i];
-          i = (i + 1) % spots.length;
-          const to = spots[i];
-          // A jump back to the start of the paragraph should not arc.
-          const lift = to.y === from.y ? 9 : 4;
-          anim = stage.animate(
-            [
-              { transform: `translate(${from.x}px, ${from.y}px)` },
-              { transform: `translate(${(from.x + to.x) / 2}px, ${Math.min(from.y, to.y) - lift}px)` },
-              { transform: `translate(${to.x}px, ${to.y}px)` },
-            ],
-            { duration: 260, easing: 'ease-in-out', fill: 'forwards' }
-          );
-          timer = setTimeout(step, 300);
+          if (!running) return;
+          i = (i + 1) % marks.length;
+          light(i);
+          // A beat at the full stop, so each pass reads as one run at the
+          // paragraph rather than an unbroken loop.
+          timer = setTimeout(step, i === 0 ? pace() * 5 : pace());
         }
 
         function start() {
-          if (!stage || reduce.matches || running) return;
-          measure();
-          if (spots.length < 2) return;
+          if (!text || running) return;
+          marks = [...text.querySelectorAll('b')];
+          if (marks.length < 2) return;
           running = true;
           i = 0;
-          stage.style.transform = `translate(${spots[0].x}px, ${spots[0].y}px)`;
+          light(0);
           timer = setTimeout(step, 350);
         }
 
         function stop() {
           running = false;
           clearTimeout(timer);
-          anim?.cancel();
+          marks.forEach((b) => b.classList.remove('lit'));
         }
 
-        // Only animate while the demo is actually on screen.
-        if (stage) {
+        // Only run while the demo is actually on screen.
+        if (text) {
           new IntersectionObserver((es) => {
             const on = document.body.classList.contains('skim-on');
             es[0].isIntersecting ? on && start() : stop();
-          }, { threshold: 0.2 }).observe(stage.parentElement);
-
-          let t;
-          addEventListener('resize', () => {
-            clearTimeout(t);
-            t = setTimeout(() => {
-              if (!running) return;
-              stop();
-              start();
-            }, 200);
-          });
+          }, { threshold: 0.2 }).observe(text);
         }
 
         return { start, stop };
@@ -434,28 +404,15 @@ const faqs = [
 
   /* The app renders Fast Skim in a sans, and that is why the effect reads
      there: 400 against 700 is a clear step without looking broken. */
-  .skim__stage { position: relative; }
-
-  /* A marker that hops from one bold prefix to the next, which is roughly
-     what your eye does once Fast Skim is on. */
-  .skim__hop {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--accent);
-    opacity: 0;
-    transition: opacity .25s ease;
-    pointer-events: none;
-    will-change: transform;
+  /* The colour arrives on a prefix at once and leaves slowly, so a few words
+     behind the front are still lit. That tail is what makes it read as a glide
+     instead of a row of separate flashes. */
+  .skim__text :global(b) { transition: color var(--walk-fade, 600ms) linear; }
+  .skim__text :global(b.lit) {
+    color: var(--accent);
+    transition: color 50ms ease;
   }
-  :global(body.skim-on) .skim__hop { opacity: 1; }
 
-  @media (prefers-reduced-motion: reduce) {
-    .skim__hop { display: none; }
-  }
 
   .skim__text {
     font-size: clamp(1.12rem, 2.4vw, 1.35rem);

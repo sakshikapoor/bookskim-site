@@ -30,6 +30,11 @@ const modes = [
       <input type="range" id="r-gap" min="0" max="96" step="2" value="30" />
     </label>
 
+    <label>
+      <span>Walk speed <output id="t-walk">120ms</output></span>
+      <input type="range" id="r-walk" min="40" max="400" step="10" value="120" />
+    </label>
+
     <fieldset class="tuner__modes" id="t-h1">
       <legend>Hero headline</legend>
       <div class="tuner__seg">
@@ -53,7 +58,20 @@ const modes = [
         const ob = document.getElementById('t-bold');
         const g = document.getElementById('r-gap');
         const og = document.getElementById('t-gap');
+        const w = document.getElementById('r-walk');
+        const ow = document.getElementById('t-walk');
         const css = document.getElementById('t-css');
+
+        // Route through the switch rather than setting the class by hand, so the
+        // colour walk starts too.
+        const ensureOn = () => {
+          if (document.body.classList.contains('skim-on')) return;
+          const t = document.querySelector('[data-skim-toggle]');
+          if (!t) return;
+          t.checked = true;
+          t.dispatchEvent(new Event('change', { bubbles: true }));
+        };
+
         const sync = () => {
           root.style.setProperty('--fs-normal', n.value);
           root.style.setProperty('--fs-bold', b.value);
@@ -61,10 +79,7 @@ const modes = [
           ob.textContent = b.value;
           css.textContent = `--fs-normal: ${n.value}; --fs-bold: ${b.value};`;
           // Nothing to see in the demo paragraph unless it is switched on.
-          if (!document.body.classList.contains('skim-on')) {
-            document.querySelectorAll('[data-skim-toggle]').forEach((t) => { t.checked = true; });
-            document.body.classList.add('skim-on');
-          }
+          ensureOn();
         };
         n.addEventListener('input', sync);
         b.addEventListener('input', sync);
@@ -74,6 +89,18 @@ const modes = [
           root.style.setProperty('--skim-gap', g.value + 'px');
           og.textContent = g.value + 'px';
         });
+
+        // Pace of the colour walk, and the tail length that goes with it. The
+        // walk reads its own delay every tick, so dragging this retimes it live.
+        const walk = (show) => {
+          document.body.dataset.walkMs = w.value;
+          root.style.setProperty('--walk-fade', w.value * 5 + 'ms');
+          ow.textContent = w.value + 'ms';
+          if (show) ensureOn();
+        };
+        w.addEventListener('input', () => walk(true));
+        // Seed the pace without switching the demo on behind your back.
+        walk(false);
 
         document.getElementById('t-h1').addEventListener('change', (e) => {
           document.body.dataset.h1 = e.target.value;
