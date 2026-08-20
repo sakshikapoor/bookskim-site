@@ -1,6 +1,12 @@
 ---
 // Dev-only. Lets you drag the two Fast Skim weights around and read off the
-// pair that looks right, then hard-code it in global.css.
+// pair that looks right, then hard-code it in global.css. The headline row
+// swaps the hero between the three renderings so they can be compared.
+const modes = [
+  { id: 'normal', label: 'Normal' },
+  { id: 'skim', label: 'Fast Skim' },
+  { id: 'bold', label: 'Bold' },
+];
 ---
 {import.meta.env.DEV && (
   <aside class="tuner" aria-label="Fast Skim weight tuner">
@@ -19,6 +25,23 @@
       <input type="range" id="r-bold" min="400" max="900" step="10" value="700" />
     </label>
 
+    <label>
+      <span>Demo gap <output id="t-gap">30px</output></span>
+      <input type="range" id="r-gap" min="0" max="96" step="2" value="30" />
+    </label>
+
+    <fieldset class="tuner__modes" id="t-h1">
+      <legend>Hero headline</legend>
+      <div class="tuner__seg">
+        {modes.map((m) => (
+          <label class="tuner__mode">
+            <input type="radio" name="h1mode" value={m.id} checked={m.id === 'skim'} />
+            <span>{m.label}</span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+
     <p class="tuner__css"><code id="t-css">--fs-normal: 400; --fs-bold: 700;</code></p>
 
     <script is:inline>
@@ -28,6 +51,8 @@
         const b = document.getElementById('r-bold');
         const on = document.getElementById('t-normal');
         const ob = document.getElementById('t-bold');
+        const g = document.getElementById('r-gap');
+        const og = document.getElementById('t-gap');
         const css = document.getElementById('t-css');
         const sync = () => {
           root.style.setProperty('--fs-normal', n.value);
@@ -35,7 +60,7 @@
           on.textContent = n.value;
           ob.textContent = b.value;
           css.textContent = `--fs-normal: ${n.value}; --fs-bold: ${b.value};`;
-          // Nothing to see unless the effect is switched on.
+          // Nothing to see in the demo paragraph unless it is switched on.
           if (!document.body.classList.contains('skim-on')) {
             document.querySelectorAll('[data-skim-toggle]').forEach((t) => { t.checked = true; });
             document.body.classList.add('skim-on');
@@ -43,6 +68,16 @@
         };
         n.addEventListener('input', sync);
         b.addEventListener('input', sync);
+
+        // The gap has its own readout: it is a length, not a font weight.
+        g.addEventListener('input', () => {
+          root.style.setProperty('--skim-gap', g.value + 'px');
+          og.textContent = g.value + 'px';
+        });
+
+        document.getElementById('t-h1').addEventListener('change', (e) => {
+          document.body.dataset.h1 = e.target.value;
+        });
       })();
     </script>
   </aside>
@@ -82,6 +117,48 @@
     margin-bottom: .2rem;
   }
   .tuner input[type='range'] { width: 100%; accent-color: var(--accent); }
+
+  /* Segmented control for the three headline renderings. */
+  .tuner__modes {
+    border: 0;
+    margin: .8rem 0 0;
+    padding: 0;
+    min-width: 0;
+  }
+  .tuner__modes legend {
+    padding: 0;
+    color: var(--ink-soft);
+    margin-bottom: .3rem;
+  }
+  .tuner__seg {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    padding: 2px;
+    background: var(--card-2);
+    border-radius: 999px;
+  }
+  .tuner label.tuner__mode { margin: 0; min-width: 0; }
+  .tuner__mode input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .tuner label.tuner__mode > span {
+    display: block;
+    text-align: center;
+    padding: .3rem .1rem;
+    margin: 0;
+    border-radius: 999px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: .72rem;
+  }
+  .tuner__mode input:checked + span {
+    background: var(--card);
+    color: var(--accent);
+    font-weight: 700;
+    box-shadow: 0 1px 3px #00000024;
+  }
+  .tuner__mode input:focus-visible + span { outline: 2px solid var(--accent); }
+
   .tuner__css {
     margin-top: .5rem;
     padding-top: .6rem;

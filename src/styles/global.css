@@ -192,12 +192,17 @@ section { padding-block: clamp(4rem, 9vw, 7.5rem); }
 }
 
 /* Fast Skim typography.
-   Off by default — the page starts as ordinary text and the reader turns the
+   Off by default, so the page starts as ordinary text and the reader turns the
    effect on, the same way they would in the app.
    The two weights are variables so they can be tuned in one place. */
 :root {
   --fs-normal: 400;
   --fs-bold: 700;
+}
+
+/* Space between the demo paragraph and the Fast Skim switch under it. */
+:root {
+  --skim-gap: 30px;
 }
 
 .fs { font-weight: var(--fs-normal); }

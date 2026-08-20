@@ -22,27 +22,27 @@ const { id, class: className = '' } = Astro.props;
   .toggle {
     display: flex;
     align-items: center;
-    gap: .85rem;
-    padding: .7rem .85rem;
+    gap: .7rem;
+    padding: .5rem .6rem;
     background: var(--card-2);
     border-radius: 999px;
     cursor: pointer;
     user-select: none;
-    max-width: 420px;
+    max-width: 340px;
   }
   .toggle input { position: absolute; opacity: 0; width: 0; height: 0; }
 
   .toggle__bolt {
     display: grid;
     place-items: center;
-    width: 30px; height: 30px;
+    width: 26px; height: 26px;
     border-radius: 50%;
     background: var(--accent-soft);
     color: var(--accent);
     flex: none;
     transition: background .2s ease;
   }
-  .toggle__bolt svg { width: 17px; height: 17px; }
+  .toggle__bolt svg { width: 15px; height: 15px; }
 
   .toggle__label {
     display: flex;
@@ -51,11 +51,11 @@ const { id, class: className = '' } = Astro.props;
     margin-right: auto;
     min-width: 0;
   }
-  .toggle__label strong { font-size: 1rem; font-weight: 700; }
-  .toggle__label > span { font-size: .85rem; color: var(--ink-soft); }
+  .toggle__label strong { font-size: .92rem; font-weight: 700; }
+  .toggle__label > span { font-size: .78rem; color: var(--ink-soft); }
 
   .toggle__track {
-    width: 52px; height: 31px;
+    width: 44px; height: 26px;
     border-radius: 999px;
     background: var(--ink-faint);
     padding: 3px;
@@ -64,14 +64,14 @@ const { id, class: className = '' } = Astro.props;
   }
   .toggle__knob {
     display: block;
-    width: 25px; height: 25px;
+    width: 20px; height: 20px;
     border-radius: 50%;
     background: #fff;
     box-shadow: 0 1px 3px #0000003d;
     transition: transform .2s ease;
   }
   .toggle input:checked ~ .toggle__track { background: var(--accent); }
-  .toggle input:checked ~ .toggle__track .toggle__knob { transform: translateX(21px); }
+  .toggle input:checked ~ .toggle__track .toggle__knob { transform: translateX(18px); }
   .toggle input:focus-visible ~ .toggle__track {
     outline: 2px solid var(--accent);
     outline-offset: 3px;

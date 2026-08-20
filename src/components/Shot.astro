@@ -4,11 +4,13 @@ interface Props {
   alt: string;
   w: number;
   h: number;
+  /* Transparent PNGs that already carry their own rounded corners. */
+  plain?: boolean;
   class?: string;
 }
-const { src, alt, w, h, class: className = '' } = Astro.props;
+const { src, alt, w, h, plain = false, class: className = '' } = Astro.props;
 ---
-<figure class:list={['shot', className]}>
+<figure class:list={['shot', plain && 'shot--plain', className]}>
   <img src={src} alt={alt} width={w} height={h} loading="lazy" decoding="async" />
 </figure>
 
@@ -26,4 +28,13 @@ const { src, alt, w, h, class: className = '' } = Astro.props;
     max-width: 100%;
   }
   .shot img { width: 100%; height: auto; }
+
+  /* Cut-out sheets and device mockups: the shadow has to follow the alpha
+     channel, not a rectangle. */
+  .shot--plain {
+    border-radius: 0;
+    overflow: visible;
+    box-shadow: none;
+    filter: drop-shadow(0 18px 30px #00000038);
+  }
 </style>
