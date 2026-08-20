@@ -75,22 +75,19 @@ const themes = [
         </div>
       </div>
 
+    </header>
+
+    <div class="hire-anchor">
       <p class="hire-note">
         <a href={hire} target="_blank" rel="noopener">looking for a designer? hire me!</a>
       </p>
-    </header>
+    </div>
 
     <main id="main">
       <slot />
     </main>
 
     <footer class="foot">
-      <div class="wrap foot__hire">
-        <a class="hire" href={hire} target="_blank" rel="noopener">
-          <span>Looking for a design?</span>
-          <strong>Hire me!</strong>
-        </a>
-      </div>
       <div class="wrap foot__in">
         <div class="foot__brand">
           <img src={url("/assets/mascot.png")} alt="" width="72" height="75" />
@@ -103,10 +100,11 @@ const themes = [
           <a href={play}>Google Play</a>
           <a href={url("/privacy/")}>Privacy</a>
           <a href="mailto:hello@wildkidstudio.in">hello@wildkidstudio.in</a>
+          <a class="foot__hire" href={hire} target="_blank" rel="noopener">Hire me</a>
         </nav>
       </div>
       <div class="wrap foot__fine">
-        <span>&copy; {new Date().getFullYear()} WildKid Studio</span>
+        <span>&copy; {new Date().getFullYear()} <a href="https://wildkidstudio.in/" target="_blank" rel="noopener">WildKid Studio</a></span>
         <span class="note">made for people with a folder of EPUBs</span>
       </div>
     </footer>
@@ -224,13 +222,20 @@ const themes = [
         flex: none;
       }
 
-      /* A handwritten aside hanging off the right end of the nav pill.
-         Same trick as the margin notes further down the page. */
+      /* A handwritten aside under the right end of the nav pill. It sits
+         outside the sticky header on purpose, so it scrolls away with the
+         hero instead of riding down the page over the content. */
+      .hire-anchor {
+        position: relative;
+        max-width: 1120px;
+        margin-inline: auto;
+        height: 0;
+      }
       .hire-note {
         position: absolute;
-        top: 100%;
-        right: max(1rem, calc(50% - 560px + 1.5rem));
-        margin: .35rem 0 0;
+        top: .35rem;
+        right: 1.5rem;
+        margin: 0;
         font-family: 'Caveat', cursive;
         font-size: 1.2rem;
         transform: rotate(-2deg);
@@ -282,26 +287,6 @@ const themes = [
         border-top: 1px solid var(--line);
         padding-block: 3rem 2rem;
       }
-      .foot__hire { margin-bottom: 2.5rem; }
-      .hire {
-        display: inline-flex;
-        align-items: baseline;
-        gap: .5rem;
-        background: var(--card);
-        border-radius: 999px;
-        padding: .6rem 1.15rem;
-        box-shadow: var(--shadow);
-        color: var(--ink-soft);
-        text-decoration: none;
-        font-size: .97rem;
-      }
-      .hire strong {
-        font-family: 'Bricolage Grotesque Variable', system-ui, sans-serif;
-        font-weight: 700;
-        color: var(--accent);
-      }
-      .hire:hover strong { text-decoration: underline; }
-
       .foot__in {
         display: flex;
         flex-wrap: wrap;
@@ -319,6 +304,7 @@ const themes = [
       .foot__links { display: flex; flex-wrap: wrap; gap: 1.5rem; font-size: .97rem; }
       .foot__links a { color: var(--ink-soft); text-decoration: none; }
       .foot__links a:hover { color: var(--ink); text-decoration: underline; }
+      .foot__links a.foot__hire { color: var(--accent); }
       .foot__fine {
         display: flex;
         flex-wrap: wrap;
@@ -329,6 +315,8 @@ const themes = [
         color: var(--ink-faint);
         font-size: .9rem;
       }
+      .foot__fine a { color: inherit; text-decoration: none; }
+      .foot__fine a:hover { color: var(--ink-soft); text-decoration: underline; }
 
       /* --- sticky download dock --- */
       .dock {
