@@ -80,6 +80,12 @@ const themes = [
     </main>
 
     <footer class="foot">
+      <div class="wrap foot__hire">
+        <a class="hire" href="https://sakshikapoor.com/" target="_blank" rel="noopener">
+          <span>Looking for a design?</span>
+          <strong>Hire me!</strong>
+        </a>
+      </div>
       <div class="wrap foot__in">
         <div class="foot__brand">
           <img src={url("/assets/mascot.png")} alt="" width="72" height="75" />
@@ -257,6 +263,26 @@ const themes = [
         border-top: 1px solid var(--line);
         padding-block: 3rem 2rem;
       }
+      .foot__hire { margin-bottom: 2.5rem; }
+      .hire {
+        display: inline-flex;
+        align-items: baseline;
+        gap: .5rem;
+        background: var(--card);
+        border-radius: 999px;
+        padding: .6rem 1.15rem;
+        box-shadow: var(--shadow);
+        color: var(--ink-soft);
+        text-decoration: none;
+        font-size: .97rem;
+      }
+      .hire strong {
+        font-family: 'Bricolage Grotesque Variable', system-ui, sans-serif;
+        font-weight: 700;
+        color: var(--accent);
+      }
+      .hire:hover strong { text-decoration: underline; }
+
       .foot__in {
         display: flex;
         flex-wrap: wrap;
